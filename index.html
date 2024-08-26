@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Nomor Acak dengan Animasi</title>
+    <title>Generator Nomor Acak dengan Animasi Bola</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -15,10 +15,12 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
+            padding: 10px;
         }
 
         h1 {
             color: #333;
+            text-align: center;
         }
 
         button {
@@ -44,23 +46,90 @@
         }
 
         .numberItem {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin: 10px;
             font-size: 24px;
             color: #007BFF;
             background-color: #fff;
             padding: 10px;
             border-radius: 5px;
-            width: 80px;
+            width: 120px;
             text-align: center;
             opacity: 0;
             transform: translateY(-20px);
             animation: fadeIn 0.5s forwards;
         }
 
+        .ball {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            font-size: 18px;
+            opacity: 0;
+            animation: dropBall 0.5s forwards;
+        }
+
+        .copyBtn {
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .copyBtn:hover {
+            background-color: #218838;
+        }
+
         @keyframes fadeIn {
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes dropBall {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .numberItem {
+                width: 100px;
+            }
+            
+            .ball {
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                font-size: 16px;
+            }
+
+            .copyBtn {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
             }
         }
     </style>
@@ -75,15 +144,50 @@
     <script>
         function generateRandomNumbers() {
             let numberListDiv = document.getElementById("numberList");
-            numberListDiv.innerHTML = "";  // Clear previous numbers
+            numberListDiv.innerHTML = "";  // Hapus nomor sebelumnya
 
             for (let i = 0; i < 10; i++) {
-                let randomNumber = Math.floor(Math.random() * 9000) + 1000;  // Generate a 4-digit number
+                let randomNumber = Math.floor(Math.random() * 9000) + 1000;  // Menghasilkan nomor 4 digit
                 let numberItem = document.createElement("div");
                 numberItem.className = "numberItem";
-                numberItem.textContent = randomNumber;
+                
+                let ballsContainer = document.createElement("div");
+
+                // Buat bola animasi untuk setiap digit
+                let digits = randomNumber.toString().split('');
+                digits.forEach((digit, index) => {
+                    let ball = document.createElement("div");
+                    ball.className = "ball";
+                    ball.textContent = digit;
+                    ball.style.backgroundColor = getBilliardBallColor(index); // Set warna bola seperti bola biliar
+                    ball.style.animationDelay = (index * 0.5) + 's'; // Delay untuk animasi
+                    ballsContainer.appendChild(ball);
+                });
+
+                let copyButton = document.createElement("button");
+                copyButton.className = "copyBtn";
+                copyButton.textContent = "Copy";
+                copyButton.onclick = function() {
+                    copyToClipboard(randomNumber);
+                };
+
+                numberItem.appendChild(ballsContainer);
+                numberItem.appendChild(copyButton);
                 numberListDiv.appendChild(numberItem);
             }
+        }
+
+        function getBilliardBallColor(index) {
+            const colors = ["#FFC000", "#0059B3", "#FF3300", "#00802B", "#FFEB3B", "#8C1AFF", "#FF3366", "#808080", "#000000"];
+            return colors[index % colors.length]; // Menggunakan warna dari array seperti bola biliar
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Nomor berhasil disalin: " + text);
+            }, function(err) {
+                console.error("Gagal menyalin: ", err);
+            });
         }
     </script>
 
