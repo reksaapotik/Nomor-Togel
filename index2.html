@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Teka-Teki Ulang Tahun</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      padding: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .puzzle {
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 400px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .feedback {
+      color: red;
+      margin-top: 10px;
+    }
+    #surprise {
+      font-size: 24px;
+      color: #e91e63;
+      animation: fadeIn 2s ease-in-out;
+    }
+    #surpriseImg {
+      margin-top: 15px;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 15px;
+    }
+    iframe {
+      margin-top: 20px;
+      border-radius: 15px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Petualangan Kotak Misteri 🎁</h1>
+
+  <div id="step1" class="puzzle">
+    <p>🧩 Tebak benda dari petunjuk ini: <br><strong>"Apa Nama Pangilan Kamu?"</strong></p>
+    <input type="text" id="answer1">
+    <button onclick="checkAnswer1()">Lanjut</button>
+    <p id="feedback1" class="feedback"></p>
+  </div>
+
+  <div id="step2" class="puzzle hidden">
+    <p>🧠 Teka-teki: <br><strong>"Kamu penah meminta sesuatu, Dan barang ini murah, Dan warnnya hitam, Apakah itu"</strong></p>
+    <input type="text" id="answer2">
+    <button onclick="checkAnswer2()">Lanjut</button>
+    <p id="feedback2" class="feedback"></p>
+  </div>
+
+  <div id="step3" class="puzzle hidden">
+    <p>Dia berwana merah dan sering kamu bawa dan penuh kenangan bagi kamu, Apkah itu</p>
+    <input type="text" id="answer3">
+    <button onclick="checkAnswer3()">Buka Kotak</button>
+    <p id="feedback3" class="feedback"></p>
+  </div>
+
+  <div id="surpriseBox" class="puzzle hidden">
+    <h2>🎉 Kotak Misteri Terbuka!</h2>
+    <p id="surprise">Selamat Ulang Tahun KITING MAMBOOO 🎂<br>Semoga harimu penuh kebahagiaan dan Semangat Melawan Dunia! 💖</p>
+    <img id="surpriseImg" src="https://c.tenor.com/pClN7HhxPTEAAAAC/tenor.gif" alt="Cewek Cantik Keriting">
+ 
+  <audio controls autoplay>
+  <source src="https://reksaapotik.github.io/Nomor-Togel/lagu.mp3" type="audio/mpeg" />
+  Browser kamu tidak mendukung pemutar audio.
+</audio>
+  
+  </div>
+
+  <script>
+    function checkAnswer1() {
+      const ans = document.getElementById("answer1").value.toLowerCase().trim();
+      const feedback = document.getElementById("feedback1");
+      if (ans.includes("kiting") || ans.includes("keriting")) {
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+        feedback.textContent = "";
+      } else {
+        feedback.textContent = "Salah Bodoohhh, Saya kasih Klue awalanya = K ";
+      }
+    }
+
+    function checkAnswer2() {
+      const ans = document.getElementById("answer2").value.toLowerCase().trim();
+      const feedback = document.getElementById("feedback2");
+      if (ans.includes("sepatu") || ans.includes("high heels")) {
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.remove("hidden");
+        feedback.textContent = "";
+      } else {
+        feedback.textContent = "EE Kiting Pintarr, bukan Boneka Gajah Jawabanya, untuk kau kerja ";
+      }
+    }
+
+    function checkAnswer3() {
+      const ans = document.getElementById("answer3").value.toLowerCase().trim();
+      const feedback = document.getElementById("feedback3");
+      if (ans.includes("mobil")) {
+        document.getElementById("step3").classList.add("hidden");
+        document.getElementById("surpriseBox").classList.remove("hidden");
+        feedback.textContent = "";
+      } else {
+        feedback.textContent = "Mikir dulu ngapa salah teruss, kendaraan kau warna merah apa";
+      }
+    }
+  </script>
+</body>
+</html>
